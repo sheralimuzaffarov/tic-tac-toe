@@ -6,6 +6,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom --watch",
+    "test:coverage": "react-scripts test --env=jsdom --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "eject": "react-scripts eject",
     "generate-favicons": "node generate-favicons.js"
   },
@@ -15,6 +19,10 @@
     "react-scripts": "^5.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "autoprefixer": "^10.4.22",
     "postcss": "^8.5.6",
     "sharp": "^0.34.5",

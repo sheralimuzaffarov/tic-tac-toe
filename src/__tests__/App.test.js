@@ -120,10 +120,10 @@ describe('App Integration Tests', () => {
     
     const moveButton = screen.getAllByText(/move #1/i)[0];
     await user.click(moveButton);
-    
-    // Board should show state at move 1
+
+    // Board should show state at move 1 - specifically check for the square button
     await waitFor(() => {
-      expect(screen.getByText('X')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Square X' })).toBeInTheDocument();
     });
   });
 
@@ -157,10 +157,10 @@ describe('App Integration Tests', () => {
     
     const newGameButton = screen.getByText(/new game/i);
     await user.click(newGameButton);
-    
+
     // Board should be reset
     const emptySquares = screen.getAllByRole('button', { name: /empty square/i });
-    expect(emptySquares.length).toBe(8); // One square was filled, now reset
+    expect(emptySquares.length).toBe(9); // Board is fully reset
   });
 
   it('should filter moves by player', async () => {

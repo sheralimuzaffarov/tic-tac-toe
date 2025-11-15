@@ -1,13 +1,9 @@
 import { renderHook, act } from '@testing-library/react';
 import { useGameStats } from '../useGameStats';
 
-// Mock storage utilities
-const mockLoadStats = jest.fn();
-const mockSaveStats = jest.fn();
-
 jest.mock('../../utils/storage', () => ({
-  loadStats: jest.fn(() => mockLoadStats()),
-  saveStats: jest.fn((stats) => mockSaveStats(stats)),
+  loadStats: jest.fn(),
+  saveStats: jest.fn(),
 }));
 
 import { loadStats, saveStats } from '../../utils/storage';
@@ -16,7 +12,7 @@ import { INITIAL_STATS } from '../../utils/constants';
 describe('useGameStats', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockLoadStats.mockReturnValue({ xWins: 0, oWins: 0, draws: 0, totalGames: 0 });
+    loadStats.mockReturnValue({ xWins: 0, oWins: 0, draws: 0, totalGames: 0 });
   });
 
   it('should initialize with stats from localStorage', () => {
@@ -42,17 +38,17 @@ describe('useGameStats', () => {
 
   it('should update stats when O wins', () => {
     const savedStats = { xWins: 1, oWins: 0, draws: 0, totalGames: 1 };
-    mockLoadStats.mockReturnValue(savedStats);
-    
+    loadStats.mockReturnValue(savedStats);
+
     const { result, rerender } = renderHook(
       ({ winner, squares }) => useGameStats(winner, squares),
       { initialProps: { winner: null, squares: Array(9).fill(null) } }
     );
-    
+
     act(() => {
       rerender({ winner: 'O', squares: ['O', 'O', 'O', null, null, null, null, null, null] });
     });
-    
+
     expect(saveStats).toHaveBeenCalled();
   });
 
